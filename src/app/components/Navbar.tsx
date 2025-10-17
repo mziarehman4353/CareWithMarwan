@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { useState } from "react";
+import { FiMenu, FiX } from "react-icons/fi";
+import { motion } from "framer-motion";
+import useScrollDirection from "@/app/hooks/useScrollDirection";
 
 const links = [
   { name: "Home", href: "/" },
@@ -14,86 +15,81 @@ const links = [
 ];
 
 export default function Navbar() {
-  const pathname = usePathname();
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const [isOpen, setIsOpen] = useState(false);
+  const scrollDirection = useScrollDirection();
 
   return (
-    <nav
-      className={`fixed w-full top-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-white/95 shadow-md backdrop-blur-md"
-          : "bg-transparent"
-      }`}
+    <motion.nav
+      className="fixed top-0 left-0 w-full z-[9999] bg-neutral-100/80 backdrop-blur-md border-b border-neutral-300"
+      animate={{
+        y: scrollDirection === "down" ? -100 : 0,
+      }}
+      transition={{ type: "spring", stiffness: 100, damping: 20 }}
     >
-      <div className="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo */}
-        <Link
-          href="/"
-          className={`text-2xl font-bold transition ${
-            scrolled ? "text-blue-700" : "text-white"
-          }`}
-        >
-          CWM Care
+        <Link href="/" className="text-2xl font-semibold text-neutral-800">
+          CWM <span className="text-neutral-500">Care</span>
         </Link>
 
-        {/* Desktop Nav */}
-        <ul className="hidden md:flex gap-6">
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-8 text-neutral-700 font-medium">
           {links.map((link) => (
-            <li key={link.href}>
-              <Link
-                href={link.href}
-                className={`transition font-medium ${
-                  pathname === link.href
-                    ? scrolled
-                      ? "text-blue-700"
-                      : "text-blue-300"
-                    : scrolled
-                    ? "text-gray-700 hover:text-blue-600"
-                    : "text-gray-200 hover:text-white"
-                }`}
-              >
-                {link.name}
-              </Link>
-            </li>
+            <Link
+              key={link.href}
+              href={link.href}
+              className="hover:text-black transition-colors duration-200"
+            >
+              {link.name}
+            </Link>
           ))}
-        </ul>
 
-        {/* Mobile Menu Button */}
+          {/* Action Button */}
+          <Link
+            href="/contact"
+            className="px-4 py-2 rounded-full bg-neutral-800 text-white hover:bg-black transition duration-300 text-sm font-medium shadow-sm"
+          >
+            Get Started
+          </Link>
+        </div>
+
+        {/* Mobile Toggle */}
         <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className={`md:hidden transition ${
-            scrolled ? "text-blue-700" : "text-white"
-          }`}
+          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden text-2xl text-neutral-700 focus:outline-none"
         >
-          {menuOpen ? <X size={26} /> : <Menu size={26} />}
+          {isOpen ? <FiX /> : <FiMenu />}
         </button>
       </div>
 
       {/* Mobile Dropdown */}
-      {menuOpen && (
-        <div className="md:hidden bg-white shadow-md">
-          <ul className="flex flex-col items-center gap-4 py-4">
-            {links.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="text-gray-700 font-medium hover:text-blue-600 transition"
-                >
-                  {link.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </nav>
+      <motion.div
+        initial={{ height: 0 }}
+        animate={{ height: isOpen ? "auto" : 0 }}
+        className={`overflow-hidden bg-neutral-100 text-center flex flex-col gap-4 text-lg transition-all duration-300 ${
+          isOpen ? "py-4 border-t border-neutral-300" : "py-0"
+        } md:hidden`}
+      >
+        {links.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            onClick={() => setIsOpen(false)}
+            className="text-neutral-700 hover:text-black font-medium transition"
+          >
+            {link.name}
+          </Link>
+        ))}
+
+        {/* Mobile Button */}
+        <Link
+          href="/contact"
+          onClick={() => setIsOpen(false)}
+          className="mx-auto mt-2 px-5 py-2 rounded-full bg-neutral-800 text-white hover:bg-black transition duration-300 text-sm font-medium w-40"
+        >
+          Get Started
+        </Link>
+      </motion.div>
+    </motion.nav>
   );
 }

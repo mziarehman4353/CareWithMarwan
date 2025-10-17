@@ -5,13 +5,13 @@ export default function About() {
       className="bg-white py-20 px-6 md:px-10 text-center scroll-mt-20"
     >
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-blue-700 mb-8">
+        <h2 className="text-3xl md:text-4xl font-bold text-black mb-8">
           About Us
         </h2>
 
         <p className="text-gray-700 text-base md:text-lg leading-relaxed mb-12">
           At <span className="font-semibold text-blue-600">CWM Care with Marwan</span>, 
-          we believe nursing is more than a profession — it’s an act of compassion and dedication. 
+          we believe nursing is more than a profession it’s an act of compassion and dedication. 
           Our team delivers high-quality nursing services that prioritize 
           patient comfort, respect, and recovery.
         </p>
