@@ -1,25 +1,95 @@
-import ServiceCard from "../components/ServiceCard";
+import ServiceCard from "@/app/components/ServiceCard";
 
 const services = [
-  { title: "Elderly Care", desc: "Professional care for seniors in the comfort of their homes." },
-  { title: "Post-Surgery Care", desc: "Specialized nursing assistance during recovery." },
-  { title: "Home Nursing", desc: "Registered nurses for in-home patient care and monitoring." },
-  { title: "Medication Management", desc: "Ensuring safe and timely medication routines." },
-  { title: "Disability Support", desc: "Compassionate support for individuals with disabilities." },
-  { title: "Emergency Nursing", desc: "Reliable and responsive emergency care services." },
+  {
+    title: "Elderly Care",
+    desc: "Dedicated daily assistance ensuring comfort, dignity, and safety for seniors.",
+    price: "$25 / hour",
+    features: [
+      "Daily living assistance",
+      "Health monitoring",
+      "Companionship support",
+    ],
+  },
+  {
+    title: "Post-Surgery Care",
+    desc: "Professional recovery support after hospital discharge.",
+    price: "$30 / hour",
+    features: [
+      "Wound care",
+      "Medication supervision",
+      "Mobility assistance",
+    ],
+  },
+  {
+    title: "Home Nursing",
+    desc: "Registered nurses providing medical care at home.",
+    price: "$35 / hour",
+    features: [
+      "Vital monitoring",
+      "Clinical procedures",
+      "Personalized care plans",
+    ],
+  },
+  {
+    title: "Medication Management",
+    desc: "Safe and timely medication administration.",
+    price: "$20 / visit",
+    features: [
+      "Dosage supervision",
+      "Schedule reminders",
+      "Error prevention",
+    ],
+  },
+  {
+    title: "Disability Support",
+    desc: "Compassionate care for individuals with physical or mental disabilities.",
+    price: "$28 / hour",
+    features: [
+      "Daily activity support",
+      "Mobility assistance",
+      "Emotional support",
+    ],
+  },
+  {
+    title: "Emergency Nursing",
+    desc: "Fast and reliable emergency nursing assistance.",
+    price: "$50 / visit",
+    features: [
+      "Immediate response",
+      "Critical care support",
+      "On-call availability",
+    ],
+  },
 ];
 
-export default function Services() {
+export default function ServicesPage() {
   return (
-    <section className="max-w-6xl mx-auto py-16 px-6">
-      <h2 className="text-3xl font-semibold text-blue-700 mb-10 text-center">
-        Our Nursing Services
-      </h2>
+    <section className="bg-neutral-50 py-24">
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Header */}
+        <div className="max-w-2xl mx-auto text-center mb-16">
+          <h1 className="text-4xl font-semibold text-gray-900 mb-4">
+            Our Nursing Services
+          </h1>
+          <p className="text-gray-600">
+            Professional, reliable, and compassionate nursing services tailored
+            to your needs.
+          </p>
+        </div>
 
-      <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-8">
-        {services.map((service, i) => (
-          <ServiceCard key={i} {...service} />
-        ))}
+        {/* Grid */}
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {services.map((service) => (
+            <ServiceCard
+              key={service.title}
+              title={service.title}
+              desc={service.desc}
+              price={service.price}
+              features={service.features}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

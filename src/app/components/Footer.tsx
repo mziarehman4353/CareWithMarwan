@@ -65,7 +65,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             className="font-medium text-neutral-900 hover:underline"
           >
-            CodeWithZia
+            CWZ
           </a>
         </p>
       </div>
