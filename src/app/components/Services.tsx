@@ -19,7 +19,7 @@ export default function Services() {
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service, index) => (
-            <ServiceCard key={index} title={service.title} desc={service.desc} />
+            <ServiceCard key={index} title={service.title} desc={service.desc} price={""} />
           ))}
         </div>
       </div>
